@@ -7,7 +7,7 @@ const CONNECTION_TOKEN = "90931547|-31949330583000260|90959931";
 
 function saveRoll2LS(jsonObj) {
     let data = JSON.parse(jsonObj.data);
-    localStorage.setItem('roll', data.rollNo);
+    localStorage.setItem("id", data.rec_no);
 }
 
 function getStudentIdAsJsonObj() {
@@ -126,6 +126,19 @@ function saveStudent() {
             JPDB_BASE_URL, JPDB_IML);
     jQuery.ajaxSetup({async: true});
     alert(JSON.stringify(resultObj));
+    resetForm();
+}
+
+function changeData() {
+    $('change').prop('disabled', true);
+    let jsonChg = validateAndGetFormData();
+    let updateRequest = createUPDATERecordRequest(CONNECTION_TOKEN, jsonChg, DB_NAME, REL_NAME, localStorage.getItem("id"));
+    alert(updateRequest);
+    jQuery.ajaxSetup({async: false});
+    var resultObj = executeCommandAtGivenBaseUrl(updateRequest,
+            JPDB_BASE_URL, JPDB_IML);
+    jQuery.ajaxSetup({async: true});
+    console.log(resultObj);
     resetForm();
 }
 
